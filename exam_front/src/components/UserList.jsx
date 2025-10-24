@@ -16,7 +16,7 @@ function UserList() {
       const res = await fetch('https://dummyjson.com/users?limit=0');
       const data = await res.json();
       // Ajout d'un délai artificiel de 1.5 secondes
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise(resolve => setTimeout(resolve, 1000));
       setUsers(data.users);
     } catch {
       setError(true);
@@ -30,19 +30,35 @@ function UserList() {
   }, []);
 
   const filteredUsers = useMemo(() => {
-    return users.filter(user =>
+    console.log('🔍 Filtrage des utilisateurs en cours...'); // Log pour voir quand le filtrage est exécuté
+    const startTime = performance.now();
+    
+    const result = users.filter(user =>
       `${user.firstName} ${user.lastName} ${user.email}`
         .toLowerCase()
         .includes(search.toLowerCase())
     );
+    
+    const endTime = performance.now();
+    console.log(`✨ Filtrage terminé ! ${result.length} utilisateurs trouvés en ${(endTime - startTime).toFixed(2)}ms`);
+    
+    return result;
   }, [users, search]);
 
   const sortedUsers = useMemo(() => {
-    return [...filteredUsers].sort((a, b) => {
+    console.log('📊 Tri des utilisateurs en cours...'); // Log pour voir quand le tri est exécuté
+    const startTime = performance.now();
+    
+    const result = [...filteredUsers].sort((a, b) => {
       if (sort === 'name') return a.firstName.localeCompare(b.firstName);
       if (sort === 'age') return a.age - b.age;
       return 0;
     });
+    
+    const endTime = performance.now();
+    console.log(`📈 Tri terminé en ${(endTime - startTime).toFixed(2)}ms ! Critère: ${sort}`);
+    
+    return result;
   }, [filteredUsers, sort]);
 
   const startIndex = (page - 1) * usersPerPage;

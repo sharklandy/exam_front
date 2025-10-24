@@ -233,6 +233,25 @@ body {
   animation: fadeIn 0.3s ease forwards;
 }
 
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.user-info h3 {
+  margin: 0;
+  font-size: 1.1em;
+}
+
+.user-info p {
+  margin: 0;
+  font-size: 0.9em;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -271,6 +290,36 @@ body {
   100% {
     transform: scale(1);
   }
+}
+
+.user-card a {
+  display: inline-block;
+  text-decoration: none;
+  background-color: #007bff;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
+}
+
+.user-card a:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.user-card a:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.dark .user-card a {
+  background-color: #2d6da9;
+}
+
+.dark .user-card a:hover {
+  background-color: #1c4b7c;
 }
 
 input, select {
