@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import UserCard from './UserCard';
 
 function UserList() {
@@ -45,21 +45,39 @@ function UserList() {
     return result;
   }, [users, search]);
 
+  // Récupérer les favoris du localStorage
+  const favorites = useMemo(() => {
+    return JSON.parse(localStorage.getItem('favorites')) || [];
+  }, []);
+
   const sortedUsers = useMemo(() => {
     console.log('📊 Tri des utilisateurs en cours...'); // Log pour voir quand le tri est exécuté
     const startTime = performance.now();
     
-    const result = [...filteredUsers].sort((a, b) => {
-      if (sort === 'name') return a.firstName.localeCompare(b.firstName);
-      if (sort === 'age') return a.age - b.age;
-      return 0;
-    });
+    let result = [...filteredUsers];
+    
+    if (sort === 'favorites') {
+      // Séparer les favoris et non-favoris
+      const favUsers = result.filter(user => favorites.includes(user.id));
+      const nonFavUsers = result.filter(user => !favorites.includes(user.id));
+      
+      // Trier chaque groupe par nom
+      favUsers.sort((a, b) => a.firstName.localeCompare(b.firstName));
+      nonFavUsers.sort((a, b) => a.firstName.localeCompare(b.firstName));
+      
+      // Combiner les deux groupes
+      result = [...favUsers, ...nonFavUsers];
+    } else if (sort === 'name') {
+      result.sort((a, b) => a.firstName.localeCompare(b.firstName));
+    } else if (sort === 'age') {
+      result.sort((a, b) => a.age - b.age);
+    }
     
     const endTime = performance.now();
     console.log(`📈 Tri terminé en ${(endTime - startTime).toFixed(2)}ms ! Critère: ${sort}`);
     
     return result;
-  }, [filteredUsers, sort]);
+  }, [filteredUsers, sort, favorites]);
 
   const startIndex = (page - 1) * usersPerPage;
   const paginatedUsers = sortedUsers.slice(startIndex, startIndex + usersPerPage);
@@ -74,7 +92,7 @@ function UserList() {
   );
 
   return (
-    <div>
+    <div className={sort === 'favorites' ? 'sorting-by-favorites' : ''}>
       <div className="controls">
         <input
           type="text"
@@ -85,6 +103,7 @@ function UserList() {
         <select value={sort} onChange={(e) => setSort(e.target.value)}>
           <option value="name">Trier par nom</option>
           <option value="age">Trier par âge</option>
+          <option value="favorites">Trier par favoris</option>
         </select>
       </div>
 

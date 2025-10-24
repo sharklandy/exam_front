@@ -241,6 +241,13 @@ body {
   animation: fadeIn 0.3s ease forwards;
 }
 
+/* Style spécial pour les cartes des utilisateurs favoris quand le tri par favoris est actif */
+.sorting-by-favorites .user-card[data-favorite="true"] {
+  border: 1px solid gold;
+  background-color: var(--card-bg);
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
+}
+
 .user-info {
   display: flex;
   flex-direction: column;

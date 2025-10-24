@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 function UserCard({ user }) {
   const [favorites, setFavorites] = useState(() => {
@@ -17,7 +17,7 @@ function UserCard({ user }) {
   };
 
   return (
-    <div className="user-card">
+    <div className="user-card" data-favorite={isFavorite}>
       <img src={user.image} alt={user.firstName} width={50} />
       <div className="user-info">
         <h3>{user.firstName} {user.lastName}</h3>
@@ -35,4 +35,3 @@ function UserCard({ user }) {
 }
 
 export default UserCard;
-``
