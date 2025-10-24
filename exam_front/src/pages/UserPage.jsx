@@ -13,7 +13,6 @@ function UserPage() {
       setLoading(true);
       const res = await fetch(`https://dummyjson.com/users/${id}`);
       const data = await res.json();
-      // Ajout d'un délai artificiel de 1.5 secondes
       await new Promise(resolve => setTimeout(resolve, 1500));
       setUser(data);
     } catch {

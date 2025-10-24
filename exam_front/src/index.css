@@ -141,7 +141,6 @@ body {
   }
 }
 
-/* Style des cartes en mode sombre */
 .dark .user-card {
   display: flex;
   align-items: center;
@@ -159,7 +158,6 @@ body {
   margin-right: auto;
 }
 
-/* Style des cartes en mode clair */
 .light .user-card {
   display: flex;
   align-items: center;
@@ -355,7 +353,6 @@ body {
   background-color: #1c4b7c;
 }
 
-/* Style pour le bouton retour */
 .detail-footer {
   margin-top: 30px;
   padding-top: 20px;
@@ -385,7 +382,6 @@ body {
   transform: translateX(-2px);
 }
 
-/* Style pour la page de détail */
 .user-detail {
   max-width: 600px;
   margin: 2rem auto;
