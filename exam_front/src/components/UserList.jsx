@@ -13,8 +13,10 @@ function UserList() {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const res = await fetch('https://dummyjson.com/users');
+      const res = await fetch('https://dummyjson.com/users?limit=0');
       const data = await res.json();
+      // Ajout d'un délai artificiel de 1.5 secondes
+      await new Promise(resolve => setTimeout(resolve, 1500));
       setUsers(data.users);
     } catch {
       setError(true);

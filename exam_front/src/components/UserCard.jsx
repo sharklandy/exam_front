@@ -26,7 +26,7 @@ function UserCard({ user }) {
       </div>
       <span
         onClick={toggleFavorite}
-        style={{ cursor: 'pointer', fontSize: '20px', color: isFavorite ? 'gold' : '#ccc' }}
+        className={`favorite-star ${isFavorite ? 'active' : ''}`}
       >
         ★
       </span>
