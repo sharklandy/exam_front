@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function UserDetail({ user }) {
   return (
     <div className="user-detail">
@@ -7,6 +9,9 @@ function UserDetail({ user }) {
       <p>Âge : {user.age}</p>
       <p>Entreprise : {user.company.name}</p>
       <p>Ville : {user.address.city}</p>
+      <div className="detail-footer">
+        <Link to="/" className="back-button">← Retour à la liste</Link>
+      </div>
     </div>
   );
 }

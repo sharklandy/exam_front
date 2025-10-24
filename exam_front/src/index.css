@@ -145,28 +145,36 @@ body {
 .dark .user-card {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   border: 1px solid #333;
   border-radius: 8px;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   background-color: #1e1e1e;
   color: #e0e0e0;
   transition: transform 0.2s ease, background-color 0.3s ease;
+  min-height: 60px;
+  width: 90%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Style des cartes en mode clair */
 .light .user-card {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   background-color: #ffffff;
   color: #333;
   transition: transform 0.2s ease, background-color 0.3s ease;
+  min-height: 60px;
+  width: 90%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .dark .user-card:hover {
@@ -236,13 +244,15 @@ body {
 .user-info {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   align-items: flex-start;
+  margin: 0 15px;
 }
 
 .user-info h3 {
   margin: 0;
   font-size: 1.1em;
+  text-align: left;
 }
 
 .user-info p {
@@ -250,6 +260,13 @@ body {
   font-size: 0.9em;
   color: var(--text-color);
   opacity: 0.8;
+  text-align: left;
+}
+
+.user-info a {
+  font-size: 0.85em;
+  padding: 4px 8px;
+  margin-top: 4px;
 }
 
 @keyframes fadeIn {
@@ -263,12 +280,21 @@ body {
   }
 }
 
+.user-card img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 25px;
+}
+
 .favorite-star {
   cursor: pointer;
   font-size: 20px;
   color: #ccc;
   transition: all 0.3s ease;
   display: inline-block;
+  margin-left: auto;
+  padding: 0 10px;
 }
 
 .favorite-star:hover {
@@ -297,16 +323,16 @@ body {
   text-decoration: none;
   background-color: #007bff;
   color: white;
-  padding: 6px 12px;
+  padding: 3px 8px;
   border-radius: 4px;
-  font-size: 0.9em;
+  font-size: 0.8em;
   transition: all 0.3s ease;
 }
 
 .user-card a:hover {
   background-color: #0056b3;
-  transform: translateY(-2px);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 .user-card a:active {
@@ -320,6 +346,61 @@ body {
 
 .dark .user-card a:hover {
   background-color: #1c4b7c;
+}
+
+/* Style pour le bouton retour */
+.detail-footer {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.back-button {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--text-color);
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  position: relative;
+  font-size: 0.9em;
+}
+
+.back-button:hover {
+  background-color: var(--border-color);
+  transform: translateX(-5px);
+}
+
+.back-button:active {
+  transform: translateX(-2px);
+}
+
+/* Style pour la page de détail */
+.user-detail {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 20px;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.user-detail img {
+  border-radius: 50%;
+  margin: 1rem 0;
+}
+
+.user-detail h2 {
+  margin: 1rem 0;
+  color: var(--text-color);
+}
+
+.user-detail p {
+  margin: 0.5rem 0;
+  color: var(--text-color);
 }
 
 input, select {
