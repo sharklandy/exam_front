@@ -8,21 +8,30 @@ function UserPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  const fetchUser = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(`https://dummyjson.com/users/${id}`);
+      const data = await res.json();
+      setUser(data);
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetch(`https://dummyjson.com/users/${id}`)
-      .then(res => res.json())
-      .then(data => {
-        setUser(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError(true);
-        setLoading(false);
-      });
+    fetchUser();
   }, [id]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error || !user) return <p>Erreur ou utilisateur introuvable</p>;
+  if (loading) return <div className="spinner"></div>;
+  if (error) return (
+    <div className="error-box">
+      <p>Erreur de chargement</p>
+      <button onClick={fetchUser}>Réessayer</button>
+    </div>
+  );
 
   return <UserDetail user={user} />;
 }
