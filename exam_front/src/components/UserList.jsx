@@ -1,5 +1,5 @@
-import UserCard from './UserCard';
 import { useEffect, useState } from 'react';
+import UserCard from './UserCard';
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -32,4 +32,3 @@ function UserList() {
 }
 
 export default UserList;
-``
