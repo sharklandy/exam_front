@@ -8,7 +8,35 @@ function UserList() {
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('name');
   const [page, setPage] = useState(1);
+  const [favorites, setFavorites] = useState(() => {
+    return JSON.parse(localStorage.getItem('favorites')) || [];
+  });
   const usersPerPage = 10;
+
+  // Écouter les changements de localStorage pour les favoris
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setFavorites(JSON.parse(localStorage.getItem('favorites')) || []);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    // Aussi écouter les changements locaux (via UserCard)
+    const interval = setInterval(() => {
+      const currentFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      setFavorites(prev => {
+        if (JSON.stringify(prev) !== JSON.stringify(currentFavorites)) {
+          return currentFavorites;
+        }
+        return prev;
+      });
+    }, 100); // Vérifier toutes les 100ms
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, []);
 
   const fetchUsers = async () => {
     try {
@@ -31,39 +59,34 @@ function UserList() {
   const filteredUsers = useMemo(() => {
     console.log('🔍 Filtrage des utilisateurs en cours...'); // Log pour voir quand le filtrage est exécuté
     const startTime = performance.now();
-    
+
     const result = users.filter(user =>
       `${user.firstName} ${user.lastName} ${user.email}`
         .toLowerCase()
         .includes(search.toLowerCase())
     );
-    
+
     const endTime = performance.now();
     console.log(`✨ Filtrage terminé ! ${result.length} utilisateurs trouvés en ${(endTime - startTime).toFixed(2)}ms`);
-    
+
     return result;
   }, [users, search]);
-
-  // Récupérer les favoris du localStorage
-  const favorites = useMemo(() => {
-    return JSON.parse(localStorage.getItem('favorites')) || [];
-  }, []);
 
   const sortedUsers = useMemo(() => {
     console.log('📊 Tri des utilisateurs en cours...'); // Log pour voir quand le tri est exécuté
     const startTime = performance.now();
-    
+
     let result = [...filteredUsers];
-    
+
     if (sort === 'favorites') {
       // Séparer les favoris et non-favoris
       const favUsers = result.filter(user => favorites.includes(user.id));
       const nonFavUsers = result.filter(user => !favorites.includes(user.id));
-      
+
       // Trier chaque groupe par nom
       favUsers.sort((a, b) => a.firstName.localeCompare(b.firstName));
       nonFavUsers.sort((a, b) => a.firstName.localeCompare(b.firstName));
-      
+
       // Combiner les deux groupes
       result = [...favUsers, ...nonFavUsers];
     } else if (sort === 'name') {
@@ -71,10 +94,10 @@ function UserList() {
     } else if (sort === 'age') {
       result.sort((a, b) => a.age - b.age);
     }
-    
+
     const endTime = performance.now();
     console.log(`📈 Tri terminé en ${(endTime - startTime).toFixed(2)}ms ! Critère: ${sort}`);
-    
+
     return result;
   }, [filteredUsers, sort, favorites]);
 
